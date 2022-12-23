@@ -2,6 +2,7 @@ import asyncio
 import itertools
 import time
 
+from aiohttp import TCPConnector
 import aiohttp
 
 from cache_tools import CacheCookie
@@ -57,7 +58,7 @@ async def get_result(session, query_info):
 
 async def main():
     t = time.perf_counter()
-    async with aiohttp.ClientSession() as session:
+    async with aiohttp.ClientSession(connector=TCPConnector(ssl=False)) as session:
         cache = CacheCookie(".last_cache_csdn")
         results = []
         results.extend(await collect_article(session, "python"))
